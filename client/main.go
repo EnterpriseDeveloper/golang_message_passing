@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"client/cmd"
+)
 
 func main() {
-	fmt.Println("HELLO Client")
+	cmd.Execute()
 }
