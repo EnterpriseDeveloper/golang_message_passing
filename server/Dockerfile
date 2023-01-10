@@ -11,12 +11,12 @@ ENV GO111MODULE=on \
 WORKDIR /build
 
 # Copy and download dependency using go mod
-COPY client/go.mod .
-COPY client/go.sum .
+COPY server/go.mod .
+COPY server/go.sum .
 RUN go mod download
 
 # Copy the code into the container
-COPY client .
+COPY server .
 
 # Build the application
 RUN go build -o main .
