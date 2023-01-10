@@ -30,7 +30,7 @@ func RabbitSend(msg structures.MmgStructure) {
 		false,      // durable
 		false,      // delete when unused
 		false,      // exclusive
-		false,      // no-wait
+		true,       // no-wait
 		nil,        // arguments
 	)
 	failOnError(err, "Failed to declare a queue")

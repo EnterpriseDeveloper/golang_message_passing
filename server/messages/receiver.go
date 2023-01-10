@@ -1,7 +1,9 @@
 package messages
 
 import (
+	"encoding/json"
 	"log"
+	"server/structures"
 
 	"github.com/streadway/amqp"
 )
@@ -22,12 +24,12 @@ func RabbitReceive() {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"hello", // name
-		false,   // durable
-		false,   // delete when unused
-		false,   // exclusive
-		false,   // no-wait
-		nil,     // arguments
+		"messages", // name
+		false,      // durable
+		false,      // delete when unused
+		false,      // exclusive
+		true,       // no-wait
+		nil,        // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
 
@@ -37,7 +39,7 @@ func RabbitReceive() {
 		true,   // auto-ack
 		false,  // exclusive
 		false,  // no-local
-		false,  // no-wait
+		true,   // no-wait
 		nil,    // args
 	)
 	failOnError(err, "Failed to register a consumer")
@@ -46,7 +48,9 @@ func RabbitReceive() {
 
 	go func() {
 		for d := range msgs {
-			log.Printf("Received a message: %s", d.Body)
+			data := structures.MmgStructure{}
+			json.Unmarshal(d.Body, &data)
+			log.Printf("Received a message: %s", data.Message)
 		}
 	}()
 

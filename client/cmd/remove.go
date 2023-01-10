@@ -10,7 +10,7 @@ import (
 
 var cmdRemoveItem = &cobra.Command{
 	Use:   "removeItem [item to remove]",
-	Short: "RemoveItem from DB",
+	Short: "Remove Item from DB",
 	Long:  `It will remove item from server DB`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
