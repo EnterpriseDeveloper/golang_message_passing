@@ -13,24 +13,34 @@ services:
   #     context: .
   #     dockerfile: ./client/Dockerfile
   #   networks:
-  #     - myNetwork      
+  #     - myNetwork  
   server:
     # ports: 
     #   - 80:80
-    #   - 443:443
+    #   - 443:443  
     build:
       context: .
       dockerfile: ./server/Dockerfile
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links: 
+        - rabbitmq 
     networks:
       - myNetwork        
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
+  rabbitmq: # login guest:guest
+    image: rabbitmq:management
     ports:
-        - 5672:5672
-        - 15672:15672
-    volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    - "4369:4369"
+    - "5671:5671"
+    - "5672:5672"
+    - "25672:25672"
+    - "15671:15671"
+    - "15672:15672"
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
     networks:
-        - myNetwork    
+        - myNetwork         

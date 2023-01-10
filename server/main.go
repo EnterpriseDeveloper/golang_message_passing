@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"server/messages"
+)
 
 func main() {
-	fmt.Println("HELLO Server")
+	messages.RabbitReceive()
 }
