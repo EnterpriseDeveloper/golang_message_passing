@@ -1,18 +1,20 @@
 package cmd
 
 import (
-	"fmt"
+	"client/messages"
+	"client/structures"
 
 	"github.com/spf13/cobra"
 )
 
 var cmdGetItem = &cobra.Command{
-	Use:   "GetItem",
-	Short: "GetItem from server",
-	Long:  `It will receive message and related data from the DB`,
+	Use:   "getItem",
+	Short: "Get Item from server",
+	Long:  `It will print message on server side`,
 	Args:  cobra.MinimumNArgs(0),
 	Run: func(cmd *cobra.Command, _ []string) {
-		fmt.Println("GetItem")
+		msg := structures.MmgStructure{Message: "getItem"}
+		messages.RabbitSend(msg)
 	},
 }
 

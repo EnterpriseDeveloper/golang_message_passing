@@ -4,20 +4,8 @@ networks:
   myNetwork:
     driver: bridge
 
-services:
-  # client:
-  #   # ports: 
-  #   #   - 80:80
-  #   #   - 443:443
-  #   build:
-  #     context: .
-  #     dockerfile: ./client/Dockerfile
-  #   networks:
-  #     - myNetwork  
+services: 
   server:
-    # ports: 
-    #   - 80:80
-    #   - 443:443  
     build:
       context: .
       dockerfile: ./server/Dockerfile

@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"client/messages"
-	"fmt"
+	"client/structures"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -14,8 +14,8 @@ var cmdAddItem = &cobra.Command{
 	Long:  `It will send new message to the server and save it to DB`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("addItem: " + strings.Join(args, " "))
-		messages.RabbitSend(strings.Join(args, " "))
+		msg := structures.MmgStructure{Message: "addItem", Body: strings.Join(args, " ")}
+		messages.RabbitSend(msg)
 	},
 }
 
