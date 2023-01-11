@@ -5,6 +5,8 @@ import (
 	"log"
 	"server/structures"
 
+	"server/storage"
+
 	"github.com/streadway/amqp"
 )
 
@@ -51,6 +53,7 @@ func RabbitReceive() {
 			data := structures.MmgStructure{}
 			json.Unmarshal(d.Body, &data)
 			log.Printf("Received a message: %s", data.Message)
+			storage.Distribute(data.Message, data.Body)
 		}
 	}()
 
