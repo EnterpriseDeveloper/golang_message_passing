@@ -25,15 +25,35 @@ func RabbitReceive() {
 	failOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
+	err = ch.ExchangeDeclare(
+		"logs",   // name
+		"fanout", // type
+		true,     // durable
+		false,    // auto-deleted
+		false,    // internal
+		false,    // no-wait
+		nil,      // arguments
+	)
+	failOnError(err, "Failed to declare an exchange")
+
 	q, err := ch.QueueDeclare(
-		"messages", // name
-		false,      // durable
-		false,      // delete when unused
-		false,      // exclusive
-		true,       // no-wait
-		nil,        // arguments
+		"",    // name
+		false, // durable
+		false, // delete when unused
+		true,  // exclusive
+		false, // no-wait
+		nil,   // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
+
+	err = ch.QueueBind(
+		q.Name, // queue name
+		"",     // routing key
+		"logs", // exchange
+		false,
+		nil,
+	)
+	failOnError(err, "Failed to bind a queue")
 
 	msgs, err := ch.Consume(
 		q.Name, // queue
@@ -41,7 +61,7 @@ func RabbitReceive() {
 		true,   // auto-ack
 		false,  // exclusive
 		false,  // no-local
-		true,   // no-wait
+		false,  // no-wait
 		nil,    // args
 	)
 	failOnError(err, "Failed to register a consumer")

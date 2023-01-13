@@ -25,13 +25,14 @@ func RabbitSend(msg structures.MmgStructure) {
 	failOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
-	q, err := ch.QueueDeclare(
-		"messages", // name
-		false,      // durable
-		false,      // delete when unused
-		false,      // exclusive
-		true,       // no-wait
-		nil,        // arguments
+	err = ch.ExchangeDeclare(
+		"logs",   // name
+		"fanout", // type
+		true,     // durable
+		false,    // auto-deleted
+		false,    // internal
+		false,    // no-wait
+		nil,      // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -40,8 +41,8 @@ func RabbitSend(msg structures.MmgStructure) {
 	msgByte, _ := json.Marshal(msg)
 
 	err = ch.PublishWithContext(ctx,
-		"",     // exchange
-		q.Name, // routing key
+		"logs", // exchange
+		"",     // routing key
 		false,  // mandatory
 		false,  // immediate
 		amqp.Publishing{
