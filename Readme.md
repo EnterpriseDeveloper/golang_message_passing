@@ -16,6 +16,6 @@ Project contain these libraries:
 - `removeItem [item to remove]` - remove item from Storage.
 
 ## Execntion
-## Be sure to run docker-compose before executing any command on Client-side.
-Open folder Client in your terminal and run `go run main.go addItem test` or any command listed above.
+## Be sure to run `docker-compose up --build` before executing any command on Client-side.
+Open folder `client` in your terminal and run `go run main.go addItem test` or any command listed above.
 
