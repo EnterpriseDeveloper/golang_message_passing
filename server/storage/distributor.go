@@ -9,34 +9,52 @@ import (
 
 var m = orderedmap.NewOrderedMap[string, any]()
 
-func Distribute(msg string, value string) {
+func Distribute(msg string, key string) {
 	switch msg {
 	case "addItem":
-		m.Set(value, time.Now().Unix())
-		fmt.Println(value, " item added!")
+		addItem(key)
 	case "getItem":
-		printItem(value)
+		getItem(key)
 	case "getAllItems":
-		printAllItems()
+		getAllItems()
 	case "removeItem":
-		m.Delete("qux")
-		fmt.Println(value, " item deleted!")
+		removeItem(key)
 	default:
 		fmt.Println("Message do not exist")
 	}
 }
 
-func printAllItems() {
+func addItem(key string) {
+	_, exist := m.Get(key)
+	if !exist {
+		m.Set(key, time.Now().Unix())
+		fmt.Println(key, " item added!")
+	} else {
+		fmt.Println("Item already exist, try another one")
+	}
+}
+
+func getItem(key string) {
+	value, exist := m.Get(key)
+	if !exist {
+		fmt.Println("Item not found.")
+	} else {
+		fmt.Println(key, value)
+	}
+}
+
+func getAllItems() {
 	for el := m.Front(); el != nil; el = el.Next() {
 		fmt.Println(el.Key, el.Value)
 	}
 }
 
-func printItem(value string) {
-	for el := m.Front(); el != nil; el = el.Next() {
-		if el.Key == value {
-			fmt.Println(el.Key, el.Value)
-			break
-		}
+func removeItem(key string) {
+	_, exist := m.Get(key)
+	if !exist {
+		fmt.Println("Item not found.")
+	} else {
+		m.Delete(key)
+		fmt.Println(key, " item deleted!")
 	}
 }

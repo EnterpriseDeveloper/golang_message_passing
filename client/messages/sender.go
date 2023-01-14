@@ -50,5 +50,5 @@ func RabbitSend(msg structures.MmgStructure) {
 			Body:        []byte(msgByte),
 		})
 	failOnError(err, "Failed to publish a message")
-	log.Printf(" [x] Sent %s\n", msg.Message) // TODO remove
+	log.Printf(" [x] Sent %s\n", msg.Message)
 }
