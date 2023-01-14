@@ -31,47 +31,33 @@ func addItem(key string) {
 	_, exist := m.Get(key)
 	if !exist {
 		m.Set(key, time.Now().Unix())
-		msg := key + " item added!"
-		fmt.Println(msg)
-		logs.WriteToLogFile(msg)
+		logs.WriteToLogFile(key + " item added!")
 	} else {
-		msg := "Item already exist, try another one"
-		fmt.Println(msg)
-		logs.WriteToLogFile(msg)
+		logs.WriteToLogFile("Item already exist, try another one")
 	}
 }
 
 func getItem(key string) {
 	value, exist := m.Get(key)
 	if !exist {
-		msg := "Item not found."
-		fmt.Println(msg)
-		logs.WriteToLogFile(msg)
+		logs.WriteToLogFile("Item not found.")
 	} else {
-		msg := key + ", " + strconv.FormatInt(value, 10)
-		fmt.Println(msg)
-		logs.WriteToLogFile(msg)
+		logs.WriteToLogFile(key + ", " + strconv.FormatInt(value, 10))
 	}
 }
 
 func getAllItems() {
 	for el := m.Front(); el != nil; el = el.Next() {
-		msg := el.Key + ", " + strconv.FormatInt(el.Value, 10)
-		fmt.Println(msg)
-		logs.WriteToLogFile(msg)
+		logs.WriteToLogFile(el.Key + ", " + strconv.FormatInt(el.Value, 10))
 	}
 }
 
 func removeItem(key string) {
 	_, exist := m.Get(key)
 	if !exist {
-		msg := "Item not found."
-		fmt.Println(msg)
-		logs.WriteToLogFile(msg)
+		logs.WriteToLogFile("Item not found.")
 	} else {
-		msg := key + " item deleted!"
 		m.Delete(key)
-		fmt.Println(msg)
-		logs.WriteToLogFile(msg)
+		logs.WriteToLogFile(key + " item deleted!")
 	}
 }

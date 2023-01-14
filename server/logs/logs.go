@@ -1,6 +1,7 @@
 package logs
 
 import (
+	"fmt"
 	"log"
 	"os"
 )
@@ -14,4 +15,5 @@ func WriteToLogFile(msg string) {
 
 	log.SetOutput(f)
 	log.Println(msg)
+	fmt.Println(msg)
 }
