@@ -5,17 +5,17 @@ networks:
     driver: bridge
 
 services: 
-  server:
-    build:
-      context: .
-      dockerfile: ./server/Dockerfile
-    restart: on-failure
-    depends_on:
-      - rabbitmq
-    links: 
-        - rabbitmq 
-    networks:
-      - myNetwork        
+  # server:
+  #   build:
+  #     context: .
+  #     dockerfile: ./server/Dockerfile
+  #   restart: on-failure
+  #   depends_on:
+  #     - rabbitmq
+  #   links: 
+  #       - rabbitmq 
+  #   networks:
+  #     - myNetwork        
   rabbitmq: # login guest:guest
     image: rabbitmq:management
     ports:

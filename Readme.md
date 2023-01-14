@@ -16,9 +16,8 @@ Project contain these libraries:
 - `removeItem [item to remove]` - remove item from Storage.
 
 ## Execntion
-## Be sure to run `docker-compose up --build` before executing any command on Client-side.
-Open folder `client` in your terminal and run `go run main.go addItem test` or any command listed above.
+1. Open terminal and run `docker-compose up --build` for bootstrap RabbitMQ container.
+2. Open folder `server` in your terminal and run`go run main.go` for bootsrap server
+3. Open folder `client` in your terminal and run `go run main.go addItem test` or any command listed above.
 
-## TODO
-- [ ] Optimize logic for docker container for running RabbitMQ and Server together. Right now Server will throw an error until RabbitMQ will fully launches.
 

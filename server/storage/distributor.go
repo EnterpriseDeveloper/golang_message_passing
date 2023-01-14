@@ -2,12 +2,15 @@ package storage
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/elliotchance/orderedmap/v2"
+
+	"server/logs"
 )
 
-var m = orderedmap.NewOrderedMap[string, any]()
+var m = orderedmap.NewOrderedMap[string, int64]()
 
 func Distribute(msg string, key string) {
 	switch msg {
@@ -28,33 +31,47 @@ func addItem(key string) {
 	_, exist := m.Get(key)
 	if !exist {
 		m.Set(key, time.Now().Unix())
-		fmt.Println(key, " item added!")
+		msg := key + " item added!"
+		fmt.Println(msg)
+		logs.WriteToLogFile(msg)
 	} else {
-		fmt.Println("Item already exist, try another one")
+		msg := "Item already exist, try another one"
+		fmt.Println(msg)
+		logs.WriteToLogFile(msg)
 	}
 }
 
 func getItem(key string) {
 	value, exist := m.Get(key)
 	if !exist {
-		fmt.Println("Item not found.")
+		msg := "Item not found."
+		fmt.Println(msg)
+		logs.WriteToLogFile(msg)
 	} else {
-		fmt.Println(key, value)
+		msg := key + ", " + strconv.FormatInt(value, 10)
+		fmt.Println(msg)
+		logs.WriteToLogFile(msg)
 	}
 }
 
 func getAllItems() {
 	for el := m.Front(); el != nil; el = el.Next() {
-		fmt.Println(el.Key, el.Value)
+		msg := el.Key + ", " + strconv.FormatInt(el.Value, 10)
+		fmt.Println(msg)
+		logs.WriteToLogFile(msg)
 	}
 }
 
 func removeItem(key string) {
 	_, exist := m.Get(key)
 	if !exist {
-		fmt.Println("Item not found.")
+		msg := "Item not found."
+		fmt.Println(msg)
+		logs.WriteToLogFile(msg)
 	} else {
+		msg := key + " item deleted!"
 		m.Delete(key)
-		fmt.Println(key, " item deleted!")
+		fmt.Println(msg)
+		logs.WriteToLogFile(msg)
 	}
 }
