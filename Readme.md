@@ -15,7 +15,7 @@ Project contain these libraries:
 - `getAllItems` - show all items on Server-side.
 - `removeItem [item to remove]` - remove item from Storage.
 
-## Execntion
+## Execution
 1. Open terminal and run `docker-compose up --build` for bootstrap RabbitMQ container.
 2. Open folder `server` in your terminal and run`go run main.go` for bootsrap server
 3. Open folder `client` in your terminal and run `go run main.go addItem test` or any command listed above.
