@@ -1,6 +1,6 @@
 # Server and Client with RabbitMQ message broker
 ## Dependencies
-Be sure you have instaled `Golang v. 1.19` version in your machine and `Docker` for Server and RabbitMQ launching.
+Be sure you have instaled `Golang v. 1.19` in your machine and `Docker` for RabbitMQ launching.
 For Golang installation you can follow this [link](https://go.dev/doc/install)
 For Docker installation you can follow this [link](https://docs.docker.com/get-docker/)
 
